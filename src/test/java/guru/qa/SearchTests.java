@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -25,28 +26,30 @@ public class SearchTests {
     @BeforeAll
     static void setUp() {
         Configuration.holdBrowserOpen = true;
-        Configuration.baseUrl = "https://www.mvideo.ru/";
+        Configuration.baseUrl = "https://www.techport.ru/";
         Configuration.browserSize = "1920x1080";
 
     }
+
     /////////////////////////// Практика с аннотацией @CValueSourse///////////////////////////
     // Аннотация ValueSourse дата провайдер. Она передаст каждый аругмент по очереди в наш тестовый метод.
     @ValueSource(strings = {
-            "iPhone", // Это
-            "Apple Watch" // и ЭТО
+            "Iphone", // Это
+            "iphone 13 pro max" // и ЭТО
     })
     // Макрос который заменяет собой аргумент теста по его индексу
-    // ParameterizedTest - когда у нас много разных входных данных но шаги не меняются.
-    // Ветвление логики не просисходит.
-    @ParameterizedTest(name = "Проверка поиска в Мвидео по слову {0}")
-    void MvideoSearchTests(String testData) { // будет передано сюда!
-        Selenide.open("https://www.mvideo.ru/");
+    // ParameterizedTest - когда у нас много разных входных данных но шаги не меняются. Ветвление логики не происходит.
+
+    @ParameterizedTest(name = "Проверка поиска в Технопорте по слову {0}")
+    void texPortSearchTests(String testData) { // будет передано сюда!
+        open("");
         //Steps
-        $(".input__field").setValue(testData);
-        $(".search-icon > svg").click();
+        $("#desktop_search_input").click();
+        $("#desktop_search_input").setValue(testData);
+        $("#desktop_search_submit svg").click();
         //ождиаемый результат
-        $$(".ng-star-inserted")
-                .find(text(testData))
+        $$(".ellip")
+                .find(Condition.text(testData))
                 .shouldBe(visible);
     }
 
@@ -54,25 +57,23 @@ public class SearchTests {
     // CsvSource позволяет работать с разными типами данных. Но всегда нужно указывать тип данных внизу.
     // String для строк, int для чисел, boolean тоже можно.
     @CsvSource(value = {
-            "iPhone | Apple iPhone 11 64GB Black (MHDA3RU/A)", // с точки зрения Junit запятая это разделитель.
-            "Apple Watch | Смарт-часы Apple Watch SE GPS 44mm Gold Aluminium/Starlight Sport"
+            "Iphone | Смартфон Apple iPhone 13 (6,1\") 128GB Starlight", // с точки зрения Junit запятая это разделитель.
+            "iphone 13 pro max | Смартфон Apple iPhone 13 Pro Max (6,7\") 256GB Sierra Blue"
 
             // Если в тексте должа быть запятая, надо использовать разделитель.
             // поставить запятую после массива. Написать delimiter = "|" и использовать | как запятую.
     },
             delimiter = '|'
     )
-    @ParameterizedTest(name = "Проверка поиска в Мвидео по слову {0}, ожидаем результат: {1}")
-    void MvideoSearchComplexTests(String testData, String expectedResult) { // будет передано сюда!
-        Selenide.open("https://www.mvideo.ru/");
-        // При первом запуске теста на "Холодной" машине тест может фейлится. Предполагаю,что из-за поп апа.
-        // уточнить это. ( поп ап в центре экрана "Нажмите «Разрешить» в углу экрана и получите доступ к скидкам "
+    @ParameterizedTest(name = "Проверка поиска в Технопорте по слову {0}, ожидаем результат: {1}")
+    void texPortSearchComplexTests(String testData, String expectedResult) { // будет передано сюда!
+        open("");
         //Steps
-        $(".input__field").setValue(testData);
-        $(".search-icon > svg").click();
+        $("#desktop_search_input").setValue(testData);
+        $("#desktop_search_input").click();
         //Ождиаемый результат
         //$$ - запрашиваем все дочерние элементы
-        $$(".ng-star-inserted")
+        $$(".ellip")
                 .find(text(expectedResult))
                 .shouldBe(visible);
     }
@@ -84,7 +85,7 @@ public class SearchTests {
                 Arguments.of("second string", List.of(4000, 8000, 1500, 1600, 2300, 4200))
         );
     }
-    // Как реализовать Методсорс для сайта мвидео?
+
     @MethodSource
     @ParameterizedTest(name = "Пример работы MethodSource")
     void methodSourceExampleTest(String first, List<Integer> second) {
@@ -94,25 +95,24 @@ public class SearchTests {
 
     @EnumSource(MenuItem.class)
     @ParameterizedTest
-    void MvideoSearchCMenuTests(MenuItem testData) { // будет передано сюда!
-        Selenide.open("https://www.mvideo.ru/");
+    void texPortSearchMenuTests(MenuItem testData) { // будет передано сюда!
+        open("");
         //Steps
-        $(".input__field").setValue("Iphone");
-        $(".search-icon > svg").click();
+        $("#desktop_search_input").click();
+        $("#desktop_search_input").setValue("Iphone");
+        $("#desktop_search_submit svg").click();
         //ождиаемый результат
-        $$(".app-header")
+        $$(".tcp-category-fast__text")
                 .find(Condition.text(testData.rusName))
                 .click();
-
         Assertions.assertEquals(
-                2,
+                1,
                 WebDriverRunner.getWebDriver().getWindowHandles().size()
-
         );
-
     }
-        @AfterEach
-    void close(){
+
+    @AfterEach
+    void close() {
         Selenide.closeWebDriver();
-        }
+    }
 }

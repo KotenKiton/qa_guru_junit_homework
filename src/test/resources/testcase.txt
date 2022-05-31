@@ -1,9 +1,9 @@
 Test case № 1,2.
 
-Проверка поиска товара  в магазине Мвидео.
-Тестовые данные [iPhone,Apple Watch]
+Проверка поиска товара  в магазине www.techport.ru.
+Тестовые данные [iphone,Apple Watch]
 Преоритет - Critical
-Предусловия: Открыт браузер со страницей www.mvideo.ru
+Предусловия: Открыт браузер со страницей www.techport.ru
 
 Шаги:
 1) Ввести в поисковую строку [Тестовые данные]
@@ -20,14 +20,14 @@ Test case № 3.
 // Практика с аннотацией @CsvSourse
  // ЭТО НЕ BEST PRACTISE - Только для того чтобы показать,что так можно.
 
-Проверка поиска товара  в магазине Мвидео.
+Проверка поиска товара  в магазине www.techport.ru
 Тестовые данные : [
-[iPhone,Смартфон Смартфон Apple iPhone 11 64GB Black (MHDA3RU/A)],
-[Apple Watch, Смарт-часы Apple Watch SE GPS 44mm Gold Aluminium/Starlight Sport]
+[iPhone,Смартфон Apple iPhone 13 (6,1") 128GB Starlight],
+[Apple Watch, Смартфон Apple iPhone 13 Pro Max (6,7") 256GB Sierra Blue]
 ]
 
 Преоритет - Critical
-Предусловия: Открыт браузер со страницей www.mvideo.ru
+Предусловия: Открыт браузер со страницей www.techport.ru
 
 Шаги:
 1) Ввести в поисковую строк  товые данные[0]}

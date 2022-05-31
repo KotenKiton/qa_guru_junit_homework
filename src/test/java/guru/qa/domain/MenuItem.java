@@ -1,7 +1,7 @@
 package guru.qa.domain;
 
 public enum MenuItem {
-    AllPromotions("Все акции"), discount30(" Скидки до 30%");
+    AllPromotions("Крупная бытовая техника"), discount30("Встраиваемая бытовая техника");
     public final String rusName;
 
     MenuItem(String rusName) {
